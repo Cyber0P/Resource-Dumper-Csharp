@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -87,25 +87,19 @@ namespace ResourceDumper_CS
             IntPtr hModule = LoadLibrary(Path);
             if (hModule == IntPtr.Zero)
             {
-                Int32 lasterror = Marshal.GetLastWin32Error();
-                Win32Exception innerEx = new Win32Exception(lasterror);
-                Console.WriteLine(innerEx);
+                ErrorShow();
             }
 
             IntPtr hRes = FindResource(hModule, ResName, Convert.ToUInt32(DTN));
             if (hRes == IntPtr.Zero)
             {
-                Int32 lasterror = Marshal.GetLastWin32Error();
-                Win32Exception innerEx = new Win32Exception(lasterror);
-                Console.WriteLine(innerEx);
+                ErrorShow();
             }
 
             IntPtr lRes = LoadResource(hModule, hRes);
             if (lRes == IntPtr.Zero)
             {
-                Int32 lasterror = Marshal.GetLastWin32Error();
-                Win32Exception innerEx = new Win32Exception(lasterror);
-                Console.WriteLine(innerEx);
+                ErrorShow();
             }
 
             uint ResSize = SizeofResource(hModule, hRes);
@@ -123,6 +117,13 @@ namespace ResourceDumper_CS
                 Console.WriteLine("Saved in: " + Path + ".bin");
             }
 
+        }
+
+        private static void ErrorShow()
+        {
+            Int32 lasterror = Marshal.GetLastWin32Error();
+            Win32Exception innerEx = new Win32Exception(lasterror);
+            Console.WriteLine(innerEx);
         }
     }
 }
