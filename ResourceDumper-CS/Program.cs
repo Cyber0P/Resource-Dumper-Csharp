@@ -84,48 +84,50 @@ namespace ResourceDumper_CS
             }
         }
 
-      private static void Dump() 
-      {
-
-     IntPtr hModule = LoadLibrary(Path);
-          
-	if (hModule == IntPtr.Zero) 
-    {
-		ErrorShow();
-	}
-	else 
-      {
-		IntPtr hRes = FindResource(hModule, ResName, Convert.ToUInt32(DTN));
-		if (hRes == IntPtr.Zero) 
+            private static void Dump()
         {
-			ErrorShow();
-		}
-		else
-           {
-			IntPtr lRes = LoadResource(hModule, hRes);
-			if (lRes == IntPtr.Zero) 
+
+            IntPtr hModule = LoadLibrary(Path);
+
+            if (hModule == IntPtr.Zero)
             {
-				ErrorShow();
-			}
-			else 
-               {
-				uint ResSize = SizeofResource(hModule, hRes);
-				if (ResSize != 0) {
-					Byte[] ReourceRAW = new Byte[ResSize];
+                ErrorShow();
+            }
+            else
+            {
+                IntPtr hRes = FindResource(hModule, ResName, Convert.ToUInt32(DTN));
+                if (hRes == IntPtr.Zero)
+                {
+                    ErrorShow();
+                }
+                else
+                {
+                    IntPtr lRes = LoadResource(hModule, hRes);
+                    if (lRes == IntPtr.Zero)
+                    {
+                        ErrorShow();
+                    }
+                    else
+                    {
+                        uint ResSize = SizeofResource(hModule, hRes);
+                        if (ResSize != 0)
+                        {
+                            Byte[] ReourceRAW = new Byte[ResSize];
 
-					Marshal.Copy(lRes, ReourceRAW, 0, (Int32) ResSize);
+                            Marshal.Copy(lRes, ReourceRAW, 0, (Int32)ResSize);
 
-					File.WriteAllBytes(Path + ".bin", ReourceRAW);
-					FreeLibrary(hModule);
+                            File.WriteAllBytes(Path + ".bin", ReourceRAW);
+                            FreeLibrary(hModule);
 
-					Console.ForegroundColor = ConsoleColor.DarkYellow;
-					Console.WriteLine("Done");
-					Console.WriteLine("Saved in: " + Path + ".bin");
-				}
-			   }
-	    	}
-     	}
-    }
+                            Console.ForegroundColor = ConsoleColor.DarkYellow;
+                            Console.WriteLine("Done");
+                            Console.WriteLine("Saved in: " + Path + ".bin");
+                        }
+                    }
+                }
+            }
+        }
+
 
         private static void ErrorShow()
         {
