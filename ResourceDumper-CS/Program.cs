@@ -91,20 +91,21 @@ namespace ResourceDumper_CS
             {
                 ErrorShow();
             }
-
-            IntPtr hRes = FindResource(hModule, ResName, Convert.ToUInt32(DTN));
+            else
+            {
+                IntPtr hRes = FindResource(hModule, ResName, Convert.ToUInt32(DTN));
             if (hRes == IntPtr.Zero)
             {
                 ErrorShow();
             }
-
-            IntPtr lRes = LoadResource(hModule, hRes);
+                else{
+                    IntPtr lRes = LoadResource(hModule, hRes);
             if (lRes == IntPtr.Zero)
             {
                 ErrorShow();
             }
-
-            uint ResSize = SizeofResource(hModule, hRes);
+                    else{
+                           uint ResSize = SizeofResource(hModule, hRes);
             if (ResSize != 0)
             {
                 Byte[] ReourceRAW = new Byte[ResSize];
@@ -116,7 +117,14 @@ namespace ResourceDumper_CS
 
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.WriteLine("Done");
-                Console.WriteLine("Saved in: " + Path + ".bin");
+                Console.WriteLine("Saved in: " + Path + ".bin");}}
+
+                    }
+
+         
+          
+
+          
             }
 
         }
