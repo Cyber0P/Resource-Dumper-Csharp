@@ -59,11 +59,13 @@ namespace ResourceDumper_CS
         }
 
         private static Boolean Checkinput(String input)
-        {
-            String a = input;
-            String[] arr = a.Split('-');
+        {  
+            
             try
             {
+               String a = input;
+               String[] arr = a.Split('-');
+          
                 if (File.Exists(arr[1]) && (Convert.ToInt32(arr[2]) >= 1 && Convert.ToInt32(arr[2]) <= 11))
                 {
                     Path = arr[1].Replace(" ", "");
